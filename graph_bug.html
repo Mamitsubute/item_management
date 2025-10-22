@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>折れ線グラフ - Canvas</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-top: 0;
+        }
+        canvas {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>月間売上推移</h1>
+        <canvas id="lineChart" width="600" height="400"></canvas>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('lineChart');
+        const ctx = canvas.getContext('2d');
+        
+        // データ
+        const data = {
+            labels: ['1月', '2月', '3月', '4月', '5月', '6月'],
+            values: [65, 59, 80, null, null, null]
+        };
+        
+        // グラフの設定
+        const padding = 50;
+        const chartWidth = canvas.width - padding * 2;
+        const chartHeight = canvas.height - padding * 2;
+        const maxValue = 100; // 固定スケール
+        const minValue = 0;
+        const valueRange = maxValue - minValue;
+        
+        // 背景
+        ctx.fillStyle = '#f9f9f9';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // グリッド線を描画
+        ctx.strokeStyle = '#e0e0e0';
+        ctx.lineWidth = 1;
+        for (let i = 0; i <= 5; i++) {
+            const y = padding + (chartHeight / 5) * i;
+            ctx.beginPath();
+            ctx.moveTo(padding, y);
+            ctx.lineTo(canvas.width - padding, y);
+            ctx.stroke();
+            
+            // Y軸のラベル
+            const value = maxValue - (valueRange / 5) * i;
+            ctx.fillStyle = '#666';
+            ctx.font = '12px sans-serif';
+            ctx.textAlign = 'right';
+            ctx.fillText(Math.round(value), padding - 10, y + 4);
+        }
+        
+        // X軸
+        ctx.strokeStyle = '#333';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(padding, canvas.height - padding);
+        ctx.lineTo(canvas.width - padding, canvas.height - padding);
+        ctx.stroke();
+        
+        // Y軸
+        ctx.beginPath();
+        ctx.moveTo(padding, padding);
+        ctx.lineTo(padding, canvas.height - padding);
+        ctx.stroke();
+        
+        // 折れ線を描画
+        const stepX = chartWidth / (data.values.length - 1);
+        
+        ctx.strokeStyle = '#667eea';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        
+        let started = false;
+        data.values.forEach((value, index) => {
+            if (value !== null) {
+                const x = padding + stepX * index;
+                const y = canvas.height - padding - ((value - minValue) / valueRange) * chartHeight;
+                
+                if (!started) {
+                    ctx.moveTo(x, y);
+                    started = true;
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+        });
+        
+        ctx.stroke();
+        
+        // データポイントを描画
+        data.values.forEach((value, index) => {
+            const x = padding + stepX * index;
+            
+            if (value !== null) {
+                const y = canvas.height - padding - ((value - minValue) / valueRange) * chartHeight;
+                
+                // 外側の円
+                ctx.fillStyle = '#667eea';
+                ctx.beginPath();
+                ctx.arc(x, y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // 内側の円
+                ctx.fillStyle = 'white';
+                ctx.beginPath();
+                ctx.arc(x, y, 3, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // 値のラベル
+                ctx.fillStyle = '#667eea';
+                ctx.font = 'bold 12px sans-serif';
+                ctx.fillText(value, x, y - 15);
+            }
+            
+            // X軸のラベル（全て表示）
+            ctx.fillStyle = '#666';
+            ctx.font = '12px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(data.labels[index], x, canvas.height - padding + 20);
+        });
+    </script>
+</body>
+</html>
