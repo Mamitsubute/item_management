@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>クリスマスショップ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Hiragino Sans', 'Yu Gothic', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .category-title {
+            font-size: 1.5em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            padding: 20px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { transform: translate(-50%, -50%); }
+            50% { transform: translate(0%, 0%); }
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-name {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-size: 1.5em;
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: bold;
+            margin-top: 15px;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+            
+            .products {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎄 クリスマスショップ 🎄</h1>
+            <div class="category-title">✨ クリスマスカテゴリ ✨</div>
+        </header>
+
+        <div class="products">
+            <div class="product-card">
+                <div class="product-image" style="background: linear-gradient(135deg, #ff6b6b 0%, #c92a2a 100%);">
+                    🎅
+                </div>
+                <div class="product-info">
+                    <div class="product-name">サンタクロース人形</div>
+                    <div class="product-price">¥3,980</div>
+                    <button class="btn">カートに追加</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image" style="background: linear-gradient(135deg, #ff922b 0%, #fd7e14 100%);">
+                    🎃
+                </div>
+                <div class="product-info">
+                    <div class="product-name">パンプキンデコレーション</div>
+                    <div class="product-price">¥2,800</div>
+                    <button class="btn">カートに追加</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image" style="background: linear-gradient(135deg, #ffd43b 0%, #fab005 100%);">
+                    ⭐
+                </div>
+                <div class="product-info">
+                    <div class="product-name">オーナメントセット</div>
+                    <div class="product-price">¥2,480</div>
+                    <button class="btn">カートに追加</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image" style="background: linear-gradient(135deg, #ff8787 0%, #ff6b6b 100%);">
+                    🎁
+                </div>
+                <div class="product-info">
+                    <div class="product-name">ギフトボックスセット</div>
+                    <div class="product-price">¥1,980</div>
+                    <button class="btn">カートに追加</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                this.textContent = '✓ 追加しました!';
+                this.style.background = 'linear-gradient(135deg, #51cf66 0%, #2f9e44 100%)';
+                setTimeout(() => {
+                    this.textContent = 'カートに追加';
+                    this.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+                }, 2000);
+            });
+        });
+
+        document.querySelectorAll('.product-card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 100);
+            });
+        });
+    </script>
+</body>
+</html>
