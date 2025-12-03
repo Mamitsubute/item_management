@@ -9,7 +9,7 @@ curl -L "https://app.magicpod.com/api/v1.0/magicpod-clients/api/${OS}/latest/" -
 unzip -q ${FILENAME}.zip
 
 # Set the various environment variables used on MagicPod
-export MAGICPOD_ORGANIZATION= "MagicPod-ishii"
+export MAGICPOD_ORGANIZATION="MagicPod-ishii"
 export MAGICPOD_PROJECT="DemoBrowser"
 
 # Run batch test
