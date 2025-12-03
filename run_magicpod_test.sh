@@ -3,7 +3,7 @@
 
 # Download and unzip the latest version of magicpod-api-client to the current directory
 # For security, MAGICPOD_API_TOKEN is set using the GitHub Actions environment variables
-OS=ubuntu-latest  # Specify windows for builds on Windows machines and linux for builds on Linux machines
+OS=linux  # Specify windows for builds on Windows machines and linux for builds on Linux machines
 FILENAME=magicpod-api-client  # Any file name
 curl -L "https://app.magicpod.com/api/v1.0/magicpod-clients/api/${OS}/latest/" -H "Authorization: Token ${MAGICPOD_API_TOKEN}" --output ${FILENAME}.zip
 unzip -q ${FILENAME}.zip
