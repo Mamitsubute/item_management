@@ -6,7 +6,7 @@ jobs:
   magic_pod_job:
 
     # Specify virtual machine format
-    runs-on: ubuntu-latest  # Specify mac this time
+    runs-on: macos-latest  # Specify mac this time
 
     # Steps in the job
     steps:
